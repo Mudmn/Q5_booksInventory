@@ -1,0 +1,112 @@
+package assignmentQ;
+
+import java.util.*;
+
+public class assignmentQ5 {
+    static int numBook;
+    static String [] bTitle;
+    static int [] ISBN;
+    static int [] bCopy;
+    static Scanner sc = new Scanner(System.in);
+    static int i;
+    static int total = 0;
+    static double average = 0.00;
+    static char yn;
+    static int ISBNs;
+    static boolean isFound = false;
+    static int ind;
+    static int status;
+    public static void main (String[]args){
+        inputs();
+    }
+
+    public static void inputs () {
+
+        System.out.print("Enter number of books to record : ");
+        numBook = sc.nextInt();
+        
+        bTitle =  new String [numBook];
+        ISBN = new int [numBook];
+        bCopy = new int [numBook];
+
+        inpRepeat();
+        outRepeat();
+        findVerify();
+        findProc(status);
+
+    }
+
+    public static void inpRepeat(){
+        for (i=0; i<numBook; i++){
+            System.out.println("Book " + (i+1));
+            System.out.print("Enter Book Title: ");
+            bTitle [i] = sc.nextLine();
+            bTitle [i] = sc.nextLine();
+            System.out.print("Enter ISBN number : ");
+            ISBN [i] = sc.nextInt();
+            System.out.print("Enter Number Of Copies Available : ");
+            bCopy [i] = sc.nextInt();
+            total = total + bCopy[i];
+        }
+    }
+
+    public static void outRepeat(){
+        System.out.println("\nAll Book Entries: ");
+        System.out.println("Book Title" + "\tISBN Number" + "\tCopies");
+        for (i=0; i<numBook; i++){
+            System.out.println(bTitle[i] + "\t\t" + ISBN[i] + "\t\t" + bCopy[i]);
+        }
+
+        System.out.println("\nTotal number of copies : " + total);
+        System.out.println("Average number of copies per book : " + avgBook(total));
+
+    }
+
+    public static double avgBook (double t){
+        average = t/numBook;
+        return average;
+    }
+
+    public static int findVerify(){
+        System.out.print("\nDo you want to proceed to find book via ISBN number? (y/n) : ");
+        yn = sc.next().charAt(0);
+        if (yn == 'n'){
+            return status = 0;
+        } else if (yn == 'y'){
+            return status = 1;
+        } else {
+            return status = 2;
+        }
+    }
+
+    public static void findProc(int st){
+
+        if (st == 0){
+            System.out.print("Thank you for using this program");
+            System.exit(0);
+        } else if (st == 1) {
+            System.out.print("Enter an ISBN number to search : ");
+            ISBNs = sc.nextInt();
+        
+            for (i=0; i<numBook; i++){
+                if (ISBNs == ISBN[i]){
+                    ind = i;
+                    isFound = true;
+                }
+            }
+        } else if (st == 2) {
+            findVerify();
+        } else 
+            System.exit(0);
+
+        if (isFound == true) {
+            System.out.println("\nBook Found :");
+            System.out.println("Title : " + bTitle[ind]);
+            System.out.println("ISBN : " + ISBN[ind]);
+            System.out.println("Copies : " + bCopy[ind]);
+        } else 
+            System.out.print("No book found with ISBN " + ISBNs);
+
+    }
+
+}
